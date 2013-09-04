@@ -1,0 +1,2 @@
+describe('nested object', function() {
+});

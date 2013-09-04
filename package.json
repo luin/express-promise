@@ -1,0 +1,27 @@
+{
+  "name": "express-promise",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "main": "./",
+  "licenses": [
+    {
+      "type": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "engines": [
+    "node >=0.6.0"
+  ],
+  "keywords": [
+    "promise",
+    "express",
+    "middleware"
+  ],
+  "devDependencies": {
+    "mocha": "~1.12.1",
+    "should": "~1.2.2",
+    "dotq": "~0.1.0"
+  }
+}
