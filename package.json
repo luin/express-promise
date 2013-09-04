@@ -1,6 +1,6 @@
 {
   "name": "express-promise",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "scripts": {
     "test": "mocha -R spec"
   },
