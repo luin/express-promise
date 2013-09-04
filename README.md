@@ -81,4 +81,4 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
 
 
 # THIS LIB IS STILL UNDER DEVELOPMENT
-# COMMING SOOM!@!
+# COMMING SOON!@!
