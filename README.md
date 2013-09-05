@@ -74,12 +74,11 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
         res.json(result);
     });
 
+## Install
+    $ npm install express-promise
+
 ## Usage
-
-  npm install express-promise
-
-
-  app.use(require('express-promise')());
+    app.use(require('express-promise')());
 
 
 # THIS LIB IS STILL UNDER DEVELOPMENT
