@@ -78,7 +78,21 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
     $ npm install express-promise
 
 ## Usage
+Just `app.use` it!
+
     app.use(require('express-promise')());
+
+This library supports the following methods: `res.send`, `res.json`, `res.render`.
+
+If you want to let express-promise support nodejs-style callbacks, you can use [dotQ](https://github.com/luin/dotQ) to convert the nodejs-style callbacks to Promises. For example:
+
+    require('dotq');
+    app.use(require('express-promise')());
+
+    var fs = require('fs');
+    app.get('/file', function(req, res) {
+        res.send(fs.readFile.promise(__dirname + '/package.json', 'utf-8'));
+    });
 
 ## License
 The MIT License (MIT)
