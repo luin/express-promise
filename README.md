@@ -94,6 +94,30 @@ If you want to let express-promise support nodejs-style callbacks, you can use [
         res.send(fs.readFile.promise(__dirname + '/package.json', 'utf-8'));
     });
 
+## Libraries
+express-promise works well with some ODM/ORM libraries such as [Mongoose](http://mongoosejs.com) and [Sequelize](http://sequelizejs.com). There are some examples in the /examples folder.
+
+### Mongoose
+When query a document without passing a callback function, Mongoose will return a [Query](http://mongoosejs.com/docs/queries.html) instance. For example:
+
+    var Person = mongoose.model('Person', yourSchema);
+    var query = Person.findOne({ 'name.last': 'Ghost' }, 'name occupation');
+
+Query has a `exec` method, when you call `query.exec(function(err, result) {})`, the query will execute and the result will return to the callback function. In some aspects, Query is like Promise, so express-promise supports Query as well. You can do this:
+
+    exports.index = function(req, res){
+      res.render('index', {
+          title: 'Express',
+          cat: Cat.findOne({name: 'Zildjian'})});
+    };
+
+and in the index.jade, you can use `cat` directly:
+
+    p The name of the cat is #{cat.name}
+
+## Sequelize
+Sequelize supports Promise after version 1.7.0 :)
+
 ## License
 The MIT License (MIT)
 
