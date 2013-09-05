@@ -115,7 +115,7 @@ and in the index.jade, you can use `cat` directly:
 
     p The name of the cat is #{cat.name}
 
-## Sequelize
+### Sequelize
 Sequelize supports Promise after version 1.7.0 :)
 
 ## License
