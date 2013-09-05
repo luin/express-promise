@@ -26,51 +26,51 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
 
 ### 2. previously
 
-	app.get('/project/:projectId', function(req, res) {
-	    var field = req.query.fields.split(';');
-	    var result = {};
-	
-	    var pending = 0;
-	    if (field.indexOf('people') !== -1) {
-	        pending++;
-	        Project.getField(req.params.projectId).then(function(result) {
-	            result.people = result;
-	            if (--pending) {
-	                output();
-	            }
-	        });
-	    }
-	
-	    if (field.indexOf('tasks') !== -1) {
-	        pending++;
-	        Project.getTaskCount(req.params.projectId).then(function(result) {
-	            result.tasksCount= result;
-	            if (--pending) {
-	                output();
-	            }
-	        });
-	    }
-	
-	    function output() {
-	        res.json(result);
-	    }
-	});
+    app.get('/project/:projectId', function(req, res) {
+        var field = req.query.fields.split(';');
+        var result = {};
+
+        var pending = 0;
+        if (field.indexOf('people') !== -1) {
+            pending++;
+            Project.getField(req.params.projectId).then(function(result) {
+                result.people = result;
+                if (--pending) {
+                    output();
+                }
+            });
+        }
+
+        if (field.indexOf('tasks') !== -1) {
+            pending++;
+            Project.getTaskCount(req.params.projectId).then(function(result) {
+                result.tasksCount= result;
+                if (--pending) {
+                    output();
+                }
+            });
+        }
+
+        function output() {
+            res.json(result);
+        }
+    });
 
 ### 2. now
-	app.get('/project/:projectId', function(req, res) {
-	    var field = req.query.fields.split(';');
-	    var result = {};
-	
-	    if (field.indexOf('people') !== -1) {
-	        result.people = Project.getField(req.params.projectId);
-	    }
-	
-	    if (field.indexOf('tasks') !== -1) {
-	        result.tasksCount = Project.getTaskCount(req.params.projectId);
-	    }
-	
-	    res.json(result);
-	});
+    app.get('/project/:projectId', function(req, res) {
+        var field = req.query.fields.split(';');
+        var result = {};
+
+        if (field.indexOf('people') !== -1) {
+            result.people = Project.getField(req.params.projectId);
+        }
+
+        if (field.indexOf('tasks') !== -1) {
+            result.tasksCount = Project.getTaskCount(req.params.projectId);
+        }
+
+        res.json(result);
+    });
 
 ## Usage
 
@@ -81,4 +81,4 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
 
 
 # THIS LIB IS STILL UNDER DEVELOPMENT
-# COMMING SOON!@!
+# COMMING VERY SOON!@!
