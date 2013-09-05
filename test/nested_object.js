@@ -1,2 +1,0 @@
-describe('nested object', function() {
-});
