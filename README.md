@@ -1,6 +1,8 @@
 # express-promise
 An [express.js](http://expressjs.com) middleware for easy rendering async query.
 
+[![Build Status](https://travis-ci.org/luin/express-promise.png?branch=master)](https://travis-ci.org/luin/express-promise)
+
 ## Cases
 ### 1. previously
 
