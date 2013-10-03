@@ -120,6 +120,7 @@ Sequelize supports Promise after version 1.7.0 :)
 
 ## Articles and Recipes
 * [Node Roundup: Bedecked, Knockout.sync.js, express-promise](http://dailyjs.com/2013/09/18/node-roundup/)
+* [减少异步嵌套，Express-promise](http://zihua.li/2013/09/express-promise/) [Chinese]
 
 ## License
 The MIT License (MIT)
