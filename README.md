@@ -118,6 +118,9 @@ and in the index.jade, you can use `cat` directly:
 ### Sequelize
 Sequelize supports Promise after version 1.7.0 :)
 
+## Articles and Recipes
+* [Node Roundup: Bedecked, Knockout.sync.js, express-promise](http://dailyjs.com/2013/09/18/node-roundup/)
+
 ## License
 The MIT License (MIT)
 
