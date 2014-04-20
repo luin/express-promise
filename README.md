@@ -107,8 +107,9 @@ Query has a `exec` method, when you call `query.exec(function(err, result) {})`,
 
     exports.index = function(req, res){
       res.render('index', {
-          title: 'Express',
-          cat: Cat.findOne({name: 'Zildjian'})});
+        title: 'Express',
+        cat: Cat.findOne({name: 'Zildjian'})}
+      );
     };
 
 and in the index.jade, you can use `cat` directly:
