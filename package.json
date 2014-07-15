@@ -5,12 +5,7 @@
     "test": "mocha -R spec"
   },
   "main": "./",
-  "licenses": [
-    {
-      "type": "Apache License 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
-    }
-  ],
+  "licenses": "MIT",
   "homepage": "https://github.com/luin/express-promise",
   "repository": {
     "type": "git",
