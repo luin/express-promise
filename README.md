@@ -94,6 +94,20 @@ If you want to let express-promise support nodejs-style callbacks, you can use [
         res.send(fs.readFile.promise(__dirname + '/package.json', 'utf-8'));
     });
 
+### Skip traverse
+
+As a gesture to performance, when traverse an object, we call `toJSON` on it to reduce the properties we need to traverse recursively. However that's measure has some negative effects. For instance, all the methods will be removed from the object so you can't use them in the template.
+
+If you want to skip calling `toJSON` on an object(as well as stop traverse it recursively), you can use the `skipTraverse` option. If the function return `true`, express-promise will skip the object.
+
+    app.use(require('express-promise')({
+      skipTraverse: function(object) {
+        if (object.hasOwnProperty('method')) {
+          return true;
+        }
+      }
+    }))
+
 ## Libraries
 express-promise works well with some ODM/ORM libraries such as [Mongoose](http://mongoosejs.com) and [Sequelize](http://sequelizejs.com). There are some examples in the /examples folder.
 
