@@ -46,12 +46,21 @@ describe('send', function() {
   });
 
   it('should work well with two params with promise', function(done) {
+    var pass = 0;
     var res = {
-      send: function(status, body) {
-        arguments.should.have.length(2);
+      status: function(status) {
+        arguments.should.have.length(1);
         status.should.equal(200);
+        if (++pass === 2) {
+          done();
+        }
+      },
+      send: function(body) {
+        arguments.should.have.length(1);
         body.promise.should.equal('hi');
-        done();
+        if (++pass === 2) {
+          done();
+        }
       }
     };
     expressPromise({methods: ['send']})(null, res);
