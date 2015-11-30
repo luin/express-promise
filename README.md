@@ -6,73 +6,81 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
 ## Cases
 ### 1. previously
 
-    app.get('/users/:userId', function(req, res) {
-        User.find(req.params.userId).then(function(user) {
-            Project.getMemo(req.params.userId).then(function(memo) {
-                res.json({
-                    user: user,
-                    memo: memo
-                });
+```javascript
+app.get('/users/:userId', function(req, res) {
+    User.find(req.params.userId).then(function(user) {
+        Project.getMemo(req.params.userId).then(function(memo) {
+            res.json({
+                user: user,
+                memo: memo
             });
         });
     });
+});
+```
 
 ### 1. now
 
-    app.get('/users/:userId', function(req, res) {
-        res.json({
-            user: User.find(req.params.userId),
-            memo: Project.getMemo(req.params.userId)
-        });
+```javascript
+app.get('/users/:userId', function(req, res) {
+    res.json({
+        user: User.find(req.params.userId),
+        memo: Project.getMemo(req.params.userId)
     });
+});
+```
 
 ### 2. previously
 
-    app.get('/project/:projectId', function(req, res) {
-        var field = req.query.fields.split(';');
-        var result = {};
+```javascript
+app.get('/project/:projectId', function(req, res) {
+    var field = req.query.fields.split(';');
+    var result = {};
 
-        var pending = 0;
-        if (field.indexOf('people') !== -1) {
-            pending++;
-            Project.getField(req.params.projectId).then(function(result) {
-                result.people = result;
-                if (--pending) {
-                    output();
-                }
-            });
-        }
+    var pending = 0;
+    if (field.indexOf('people') !== -1) {
+        pending++;
+        Project.getField(req.params.projectId).then(function(result) {
+            result.people = result;
+            if (--pending) {
+                output();
+            }
+        });
+    }
 
-        if (field.indexOf('tasks') !== -1) {
-            pending++;
-            Project.getTaskCount(req.params.projectId).then(function(result) {
-                result.tasksCount= result;
-                if (--pending) {
-                    output();
-                }
-            });
-        }
+    if (field.indexOf('tasks') !== -1) {
+        pending++;
+        Project.getTaskCount(req.params.projectId).then(function(result) {
+            result.tasksCount= result;
+            if (--pending) {
+                output();
+            }
+        });
+    }
 
-        function output() {
-            res.json(result);
-        }
-    });
+    function output() {
+        res.json(result);
+    }
+});
+```
 
 ### 2. now
-    app.get('/project/:projectId', function(req, res) {
-        var field = req.query.fields.split(';');
-        var result = {};
+```javascript
+app.get('/project/:projectId', function(req, res) {
+    var field = req.query.fields.split(';');
+    var result = {};
 
-        if (field.indexOf('people') !== -1) {
-            result.people = Project.getField(req.params.projectId);
-        }
+    if (field.indexOf('people') !== -1) {
+        result.people = Project.getField(req.params.projectId);
+    }
 
-        if (field.indexOf('tasks') !== -1) {
-            result.tasksCount = Project.getTaskCount(req.params.projectId);
-        }
+    if (field.indexOf('tasks') !== -1) {
+        result.tasksCount = Project.getTaskCount(req.params.projectId);
+    }
 
-        res.json(result);
-    });
+    res.json(result);
+});
+```
 
 ## Install
     $ npm install express-promise
@@ -80,19 +88,23 @@ An [express.js](http://expressjs.com) middleware for easy rendering async query.
 ## Usage
 Just `app.use` it!
 
-    app.use(require('express-promise')());
+```javascript
+app.use(require('express-promise')());
+```
 
 This library supports the following methods: `res.send`, `res.json`, `res.render`.
 
 If you want to let express-promise support nodejs-style callbacks, you can use [dotQ](https://github.com/luin/dotQ) to convert the nodejs-style callbacks to Promises. For example:
 
-    require('dotq');
-    app.use(require('express-promise')());
+```javascript
+require('dotq');
+app.use(require('express-promise')());
 
-    var fs = require('fs');
-    app.get('/file', function(req, res) {
-        res.send(fs.readFile.promise(__dirname + '/package.json', 'utf-8'));
-    });
+var fs = require('fs');
+app.get('/file', function(req, res) {
+    res.send(fs.readFile.promise(__dirname + '/package.json', 'utf-8'));
+});
+```
 
 ### Skip traverse
 
@@ -100,13 +112,15 @@ As a gesture to performance, when traverse an object, we call `toJSON` on it to 
 
 If you want to skip calling `toJSON` on an object(as well as stop traverse it recursively), you can use the `skipTraverse` option. If the function return `true`, express-promise will skip the object.
 
-    app.use(require('express-promise')({
-      skipTraverse: function(object) {
-        if (object.hasOwnProperty('method')) {
-          return true;
-        }
-      }
-    }))
+```javascript
+app.use(require('express-promise')({
+  skipTraverse: function(object) {
+    if (object.hasOwnProperty('method')) {
+      return true;
+    }
+  }
+}))
+```
 
 ## Libraries
 express-promise works well with some ODM/ORM libraries such as [Mongoose](http://mongoosejs.com) and [Sequelize](http://sequelizejs.com). There are some examples in the /examples folder.
@@ -114,17 +128,21 @@ express-promise works well with some ODM/ORM libraries such as [Mongoose](http:/
 ### Mongoose
 When query a document without passing a callback function, Mongoose will return a [Query](http://mongoosejs.com/docs/queries.html) instance. For example:
 
-    var Person = mongoose.model('Person', yourSchema);
-    var query = Person.findOne({ 'name.last': 'Ghost' }, 'name occupation');
+```javascript
+var Person = mongoose.model('Person', yourSchema);
+var query = Person.findOne({ 'name.last': 'Ghost' }, 'name occupation');
+```
 
 Query has a `exec` method, when you call `query.exec(function(err, result) {})`, the query will execute and the result will return to the callback function. In some aspects, Query is like Promise, so express-promise supports Query as well. You can do this:
 
-    exports.index = function(req, res){
-      res.render('index', {
-        title: 'Express',
-        cat: Cat.findOne({name: 'Zildjian'})
-      });
-    };
+```javascript
+exports.index = function(req, res){
+  res.render('index', {
+    title: 'Express',
+    cat: Cat.findOne({name: 'Zildjian'})
+  });
+};
+```
 
 and in the index.jade, you can use `cat` directly:
 
